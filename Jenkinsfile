@@ -1,47 +1,39 @@
-pipeline {
-  agent any
-  stages {
-    stage('build') {
-      steps {
-        echo 'this is the build job'
-        sh 'npm install'
-      }
+pipeline{
+
+    agent any
+
+// uncomment the following lines by removing /* and */ to enable
+    tools{
+//       maven 'Maven 3.6.3' 
+		nodejs 'NodeJS 18.9.1'
     }
 
-    stage('test') {
-      steps {
-        echo 'this is the test job'
-        sh 'npm test'
-      }
+    stages{
+        stage('build'){
+            steps{
+                echo 'this is the build stage'
+                sh 'npm install'
+            }
+        }
+        stage('test'){
+            steps{
+                echo 'this is the test stage'
+                sh 'npm test'
+            }
+        }
+        stage('package'){
+            steps{
+                echo 'this is the package stage'
+                sh 'npm run package'
+            }
+        }
     }
-
-    stage('package') {
-      steps {
-        echo 'this is the package job'
-        sh 'npm run package'
-      }
+    
+    post{
+        always{
+            echo 'this pipeline code has completed execution...'
+        }
+        
     }
-
-    stage('artifact') {
-      steps {
-        archiveArtifacts '**/distribution/*.zip'
-      }
-    }
-
-    stage('Archive') {
-      steps {
-        archiveArtifacts '**/distribution/*.zip'
-      }
-    }
-
-  }
-  tools {
-    nodejs 'nodejs'
-  }
-  post {
-    always {
-      echo 'this pipeline has completed...'
-    }
-
-  }
+    
 }
