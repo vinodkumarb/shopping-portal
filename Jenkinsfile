@@ -5,7 +5,7 @@ pipeline{
 // uncomment the following lines by removing /* and */ to enable
     tools{
 //       maven 'Maven 3.6.3' 
-	nodejs 'nodejs 18.9.1'
+	nodejs 'nodejs'
     }
 
     stages{
